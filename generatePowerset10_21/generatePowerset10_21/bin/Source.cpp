@@ -1,42 +1,54 @@
 #include <iostream>
 using namespace std;
 
-const int max= 100;
+const int maxsize = 100;
 
-// »¼°j¹ê²{¾­¶°
-void gP(int set[], int current[], int index, int setSize) {
-    // ·í index µ¥©ó¶°¦X¤j¤p®É¡Aªí¥Ü¤w¸g¥Í¦¨¤F¤@­Ó¤l¶°
+// éè¿´å¯¦ç¾å†ªé›†
+void gp(int set[], int current[], int index, int setSize) {
     if (index == setSize) {
         cout << "{ ";
-        // ¥´¦L·í«e¤l¶°¤¤ªº¤¸¯À
         for (int i = 0; i < setSize; i++) {
-            if (current[i] != -1) { 
+            if (current[i] != -1) {
                 cout << current[i] << " ";
             }
         }
-        cout << "}" << endl; 
+        cout << "}" << endl;
         return;
     }
 
-    // ¥]§t·í«e¤¸¯À
-    current[index] = set[index]; // ±N·í«e¤¸¯À²K¥[¨ì¤l¶°¤¤
-    gP(set, current, index + 1, setSize); // »¼°j½Õ¥Î¡A³B²z¤U¤@­Ó¤¸¯À
+    // åŒ…å«ç•¶å‰å…ƒç´ 
+    current[index] = set[index]; // å°‡ç•¶å‰å…ƒç´ æ·»åŠ åˆ°å­é›†ä¸­
+    gp(set, current, index + 1, setSize); // éè¿´èª¿ç”¨ï¼Œè™•ç†ä¸‹ä¸€å€‹å…ƒç´ 
 
-    // ¤£¥]§t·í«e¤¸¯À
-    current[index] = -1; // ¨Ï¥Î -1 ªí¥Ü¤£¥]§t·í«e¤¸¯À
-    gP(set, current, index + 1, setSize); // »¼°j½Õ¥Î¡A³B²z¤U¤@­Ó¤¸¯À
+    // ä¸åŒ…å«ç•¶å‰å…ƒç´ 
+    current[index] = -1; // ä½¿ç”¨ -1 è¡¨ç¤ºä¸åŒ…å«ç•¶å‰å…ƒç´ 
+    gp(set, current, index + 1, setSize); // éè¿´èª¿ç”¨ï¼Œè™•ç†ä¸‹ä¸€å€‹å…ƒç´ 
 }
 
 int main() {
-    int set[] = { 1, 2, 3 }; // ©w¸q¶°¦X¡A¥i¥H®Ú¾Ú»İ­n§ó§ï¤¸¯À
-    int current[max]; // ¥Î©ó«O¦s·í«e¤l¶°
+    int set[maxsize];
+    int setSize;
 
-    // ªì©l¤Æ current °}¦C¬° -1¡Aªí¥Ü¤£¥]§t¥ô¦ó¤¸¯À
-    for (int i = 0; i <max; i++) {
+    cout << "è«‹è¼¸å…¥é›†åˆçš„å¤§å°: ";
+    cin >> setSize;
+
+    cout << "è«‹è¼¸å…¥é›†åˆçš„å…ƒç´ : ";
+    for (int i = 0; i < setSize; i++) {
+        cin >> set[i];
+    }
+
+    int current[maxsize];
+
+    // åˆå§‹åŒ– current é™£åˆ—ç‚º -1ï¼Œè¡¨ç¤ºä¸åŒ…å«ä»»ä½•å…ƒç´ 
+    for (int i = 0; i < maxsize; i++) {
         current[i] = -1;
     }
 
-    cout << "¾­¶°¬°¡G" << endl;
-    gP(set, current, 0, 3); // 3 ¬O set ªº¤j¤p
+    cout << "å†ªé›†ç‚ºï¼š" << endl;
+    gp(set, current, 0, setSize); // ä½¿ç”¨ç”¨æˆ¶è¼¸å…¥çš„é›†åˆå¤§å°
     return 0;
 }
+//ç¸½å…±æœƒæœ‰2^nå€‹å­é›†ï¼Œè¼¸å‡ºçš„å­é›†æœƒæŒ‰ç…§é™£åˆ—ä¾åºæ’åºè‡³ç©ºé›†åˆ
+//å› æ­¤ï¼Œfor example
+//n=3,s={1,2,3}
+//è¼¸å‡º2^3=8å€‹å­é›†åˆï¼Œ{1,2,3}{1,2}{1,3}{1}{2,3}{2}{3}{}
